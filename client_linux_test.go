@@ -14,12 +14,12 @@ import (
 	"testing"
 	"time"
 
+	"github.com/Intrising/wifi/internal/nl80211"
 	"github.com/google/go-cmp/cmp"
 	"github.com/mdlayher/genetlink"
 	"github.com/mdlayher/genetlink/genltest"
 	"github.com/mdlayher/netlink"
 	"github.com/mdlayher/netlink/nlenc"
-	"github.com/mdlayher/wifi/internal/nl80211"
 )
 
 func TestLinux_clientInterfacesBadResponseCommand(t *testing.T) {

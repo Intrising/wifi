@@ -10,10 +10,10 @@ import (
 	"time"
 	"unicode/utf8"
 
+	"github.com/Intrising/wifi/internal/nl80211"
 	"github.com/mdlayher/genetlink"
 	"github.com/mdlayher/netlink"
 	"github.com/mdlayher/netlink/nlenc"
-	"github.com/mdlayher/wifi/internal/nl80211"
 )
 
 // Errors which may occur when interacting with generic netlink.
@@ -163,7 +163,6 @@ func (c *client) StationInfo(ifi *Interface) ([]*StationInfo, error) {
 
 	return stations, nil
 }
-
 
 // checkMessages verifies that response messages from generic netlink contain
 // the command and family version we expect.
