@@ -5,6 +5,7 @@ package wifi
 import (
 	"bytes"
 	"errors"
+	"fmt"
 	"net"
 	"os"
 	"time"
@@ -82,11 +83,11 @@ func (c *client) DFSStatus() ([]*Interface, error) {
 		return nil, err
 	}
 
-	if err := c.checkMessages(msgs, nl80211.CmdGetWiphy); err != nil {
+	if err := c.checkMessages(msgs, nl80211.CmdNewWiphy); err != nil {
 		return nil, err
 	}
 
-	return parseInterfaces(msgs)
+	return parseDFSStatus(msgs)
 }
 
 // Interfaces requests that nl80211 return a list of all WiFi interfaces present
@@ -202,6 +203,21 @@ func (c *client) checkMessages(msgs []genetlink.Message, command uint8) error {
 	}
 
 	return nil
+}
+
+// parseInterfaces parses zero or more Interfaces from nl80211 interface
+// messages.
+func parseDFSStatus(msgs []genetlink.Message) ([]*Interface, error) {
+	ifis := make([]*Interface, 0, len(msgs))
+	for _, m := range msgs {
+		attrs, err := netlink.UnmarshalAttributes(m.Data)
+		if err != nil {
+			return nil, err
+		}
+		fmt.Println("attrs=", attrs)
+	}
+
+	return ifis, nil
 }
 
 // parseInterfaces parses zero or more Interfaces from nl80211 interface
