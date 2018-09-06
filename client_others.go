@@ -22,6 +22,11 @@ func (c *client) Interfaces() ([]*Interface, error) {
 	return nil, errUnimplemented
 }
 
+// Interfaces always returns an error.
+func (c *client) DFSStatus() ([]*Interface, error) {
+	return nil, errUnimplemented
+}
+
 // BSS always returns an error.
 func (c *client) BSS(ifi *Interface) (*BSS, error) {
 	return nil, errUnimplemented

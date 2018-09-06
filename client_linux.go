@@ -67,6 +67,30 @@ func (c *client) Close() error {
 
 // Interfaces requests that nl80211 return a list of all WiFi interfaces present
 // on this system.
+func (c *client) DFSStatus() ([]*Interface, error) {
+	// Ask nl80211 to dump a list of all WiFi interfaces
+	req := genetlink.Message{
+		Header: genetlink.Header{
+			Command: nl80211.CmdGetWiphy,
+			Version: c.familyVersion,
+		},
+	}
+
+	flags := netlink.HeaderFlagsRequest | netlink.HeaderFlagsDump
+	msgs, err := c.c.Execute(req, c.familyID, flags)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := c.checkMessages(msgs, nl80211.CmdGetWiphy); err != nil {
+		return nil, err
+	}
+
+	return parseInterfaces(msgs)
+}
+
+// Interfaces requests that nl80211 return a list of all WiFi interfaces present
+// on this system.
 func (c *client) Interfaces() ([]*Interface, error) {
 	// Ask nl80211 to dump a list of all WiFi interfaces
 	req := genetlink.Message{

@@ -54,6 +54,7 @@ func (c *Client) StationInfo(ifi *Interface) ([]*StationInfo, error) {
 type osClient interface {
 	Close() error
 	Interfaces() ([]*Interface, error)
+	DFSStatus() ([]*Interface, error)
 	BSS(ifi *Interface) (*BSS, error)
 	StationInfo(ifi *Interface) ([]*StationInfo, error)
 }
