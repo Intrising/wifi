@@ -35,6 +35,11 @@ func (c *Client) Close() error {
 	return c.c.Close()
 }
 
+// DFSStatus :
+func (c *Client) DFSStatus() ([]*Interface, error) {
+	return c.c.DFSStatus()
+}
+
 // Interfaces returns a list of the system's WiFi network interfaces.
 func (c *Client) Interfaces() ([]*Interface, error) {
 	return c.c.Interfaces()
